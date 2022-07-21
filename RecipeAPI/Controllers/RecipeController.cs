@@ -56,6 +56,12 @@ namespace RecipeAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+            var recipe = await _recipeService.GetRecipeById(recipeUpdateModel.Id);
+
+            if (recipe == null)
+            {
+                return NotFound("Recipe does not exist.");
+            }
             return Ok(_recipeService.UpdateRecipe(recipeUpdateModel));
         }
 

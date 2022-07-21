@@ -38,6 +38,10 @@ namespace Business.Services
         public async Task<RecipeModel> GetRecipeById(int recipeId)
         {
             var recipe = await _recipeRepository.GetRecipeById(recipeId);
+            if(recipe == null)
+            {
+                return null;
+            }
             return recipe.ToGetRecipeModel();
         }
 

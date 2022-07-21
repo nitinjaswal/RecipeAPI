@@ -6,6 +6,7 @@ namespace Business.Models
     public class RecipeAddModel
     {
         [Required]
+        [MaxLength(50)]
         public string RecipeName { get; set; }
         [Required]
         public Boolean IsVeg { get; set; }

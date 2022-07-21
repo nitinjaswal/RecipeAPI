@@ -5,6 +5,7 @@ namespace Business.Models
 {
     public class RecipeUpdateModel
     {
+        [Required]
         public int Id { get; set; }
         [Required]
         [MaxLength(50)]
