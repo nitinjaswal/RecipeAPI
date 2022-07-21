@@ -10,7 +10,9 @@ namespace Data.Repository.Interfaces
     public interface IRecipeRepository
     {
         Task<IEnumerable<Recipe>> GetRecipes();
+        Task<Recipe> GetRecipeById(int recipeId);
         void AddRecipe(Recipe recipe);
-        void RemoveRecipe(int recipeId);
+        Task<int> RemoveRecipe(Recipe recipe);
+
     }
 }

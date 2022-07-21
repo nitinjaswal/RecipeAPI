@@ -36,16 +36,27 @@ namespace RecipeAPI.Controllers
         {
         }
 
-        // PUT api/<RecipeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
         // DELETE api/<RecipeController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{recipeId}")]
+        public async Task<ActionResult> Delete(int recipeId)
         {
+            if (recipeId < 1)
+            {
+                return BadRequest("RecipeId  is invalid.");
+            }
+
+            var recipe = await _recipeRepository.GetRecipeById(recipeId);
+
+            if (recipe == null)
+            {
+                return NotFound("RecipeId does not exist.");
+            }
+
+            if (await _recipeRepository.RemoveRecipe(recipe) > 0)
+            {
+                return Ok("Recipe deleted successfully");
+            };
+            return BadRequest("Failed to delete recipe.");
         }
     }
 }

@@ -27,9 +27,15 @@ namespace Data.Repository
             return await _context.Recipes.Include(x => x.Ingredients).ToListAsync();
         }
 
-        public void RemoveRecipe(int recipeId)
+        public async Task<int> RemoveRecipe(Recipe recipe)
         {
-            throw new NotImplementedException();
+            _context.Recipes.Remove(recipe);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<Recipe> GetRecipeById(int recipeId)
+        {
+            return await _context.Recipes.Where(x => x.Id == recipeId).Include(i => i.Ingredients).FirstOrDefaultAsync();
         }
     }
 }
