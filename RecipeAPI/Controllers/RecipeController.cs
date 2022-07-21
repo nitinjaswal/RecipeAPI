@@ -1,8 +1,7 @@
-﻿using Data.Models;
+﻿using Business.Helper;
+using Business.Models;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RecipeAPI.Controllers
 {
@@ -11,44 +10,62 @@ namespace RecipeAPI.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeRepository _recipeRepository;
+
         public RecipeController(IRecipeRepository recipeRepository)
         {
             _recipeRepository = recipeRepository;
         }
 
+        /// <summary>
+        /// Get all recipes
+        /// </summary>
+        /// <returns></returns>
         // GET: api/<RecipeController>
-        [HttpGet]
+        [HttpGet("", Name = "Recipes")]
         public async Task<ActionResult> Get()
         {
-            var recipes = await _recipeRepository.GetRecipes();
-            return Ok(recipes);
+            var recipes = await _recipeRepository.GetRecipes();             
+            return Ok(recipes.ToRecipeModel());
         }
 
-
+        /// <summary>
+        /// Create new recipe with ingredients
+        /// </summary>
+        /// <param name="recipeModel"></param>
+        /// <returns></returns>
         // POST api/<RecipeController>
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] RecipeModel recipeModel)
+        [HttpPost("",Name ="Add Recipe")]
+        public async Task<ActionResult> Post([FromBody] RecipeAddModel recipeAddModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            return Ok(await _recipeRepository.AddRecipe(recipeModel));
+         
+            return Ok(_recipeRepository.AddRecipe(recipeAddModel.ToAddRecipe()));
         }
 
+        /// <summary>
+        /// Update existing recipe or ingredients
+        /// </summary>
+        /// <param name="recipeModel"></param>
+        /// <returns></returns>
         // PUT api/<RecipeController>
-        [HttpPut]
-        public async Task<ActionResult> PUT([FromBody] RecipeModel recipeModel)
+        [HttpPut("", Name = "Update Recipe")]
+        public async Task<ActionResult> PUT([FromBody] RecipeUpdateModel recipeUpdateModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            return Ok(await _recipeRepository.AddRecipe(recipeModel));
+            return Ok(_recipeRepository.UpdateRecipe(recipeUpdateModel.ToUpdateRecipe()));
         }
 
+        /// <summary>
+        /// Delete a recipe
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
         // DELETE api/<RecipeController>/5
         [HttpDelete("{recipeId}")]
         public async Task<ActionResult> Delete(int recipeId)
@@ -70,6 +87,6 @@ namespace RecipeAPI.Controllers
                 return Ok("Recipe deleted successfully");
             };
             return BadRequest("Failed to delete recipe.");
-        }
+        }        
     }
 }

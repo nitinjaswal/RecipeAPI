@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
-namespace Data.Entities
+namespace Business.Models
 {
-    public class Recipe
+    public class RecipeUpdateModel
     {
-        [Key]
-        [Required]
         public int Id { get; set; }
         [Required]
         public string RecipeName { get; set; }
@@ -15,9 +14,7 @@ namespace Data.Entities
         public string Servings { get; set; }
         [Required]
         public string Instructions { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime? CreatedDateTime { get; set; }
         public DateTime? UpdatedDateTime { get; set; }
-        public ICollection<Ingredient> Ingredients   { get; set; }
+        public ICollection<IngredientUpdateModel> Ingredients { get; set; }
     }
 }
