@@ -1,6 +1,5 @@
-﻿using Business.Helper;
-using Business.Models;
-using Data.Repository.Interfaces;
+﻿using Business.Models;
+using Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RecipeAPI.Controllers
@@ -9,11 +8,11 @@ namespace RecipeAPI.Controllers
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private readonly IRecipeRepository _recipeRepository;
+        private readonly IRecipeService _recipeService;
 
-        public RecipeController(IRecipeRepository recipeRepository)
+        public RecipeController(IRecipeService recipeService)
         {
-            _recipeRepository = recipeRepository;
+            _recipeService = recipeService;
         }
 
         /// <summary>
@@ -24,8 +23,7 @@ namespace RecipeAPI.Controllers
         [HttpGet("", Name = "Recipes")]
         public async Task<ActionResult> Get()
         {
-            var recipes = await _recipeRepository.GetRecipes();             
-            return Ok(recipes.ToRecipeModel());
+            return Ok(await _recipeService.GetRecipes());
         }
 
         /// <summary>
@@ -42,7 +40,7 @@ namespace RecipeAPI.Controllers
                 return BadRequest(ModelState);
             }
          
-            return Ok(_recipeRepository.AddRecipe(recipeAddModel.ToAddRecipe()));
+            return Ok(_recipeService.AddRecipe(recipeAddModel));
         }
 
         /// <summary>
@@ -58,7 +56,7 @@ namespace RecipeAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_recipeRepository.UpdateRecipe(recipeUpdateModel.ToUpdateRecipe()));
+            return Ok(_recipeService.UpdateRecipe(recipeUpdateModel));
         }
 
         /// <summary>
@@ -75,14 +73,14 @@ namespace RecipeAPI.Controllers
                 return BadRequest("RecipeId  is invalid.");
             }
 
-            var recipe = await _recipeRepository.GetRecipeById(recipeId);
+            var recipe = await _recipeService.GetRecipeById(recipeId);
 
             if (recipe == null)
             {
                 return NotFound("RecipeId does not exist.");
             }
 
-            if (await _recipeRepository.RemoveRecipe(recipe) > 0)
+            if (await _recipeService.RemoveRecipe(recipeId) > 0)
             {
                 return Ok("Recipe deleted successfully");
             };

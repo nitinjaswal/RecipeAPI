@@ -8,7 +8,7 @@ namespace Data.Repository.Interfaces
         Task<Recipe> GetRecipeById(int recipeId);
         Task AddRecipe(Recipe recipe);
         Task UpdateRecipe(Recipe recipe);
-        Task<int> RemoveRecipe(Recipe recipe);
+        Task<int> RemoveRecipe(int recipeId);
 
     }
 }

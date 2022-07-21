@@ -29,8 +29,9 @@ namespace Data.Repository
             return await _context.Recipes.Where(x => x.IsActive != false).Include(ing => ing.Ingredients).ToListAsync();
         }
 
-        public async Task<int> RemoveRecipe(Recipe recipe)
+        public async Task<int> RemoveRecipe(int recipeId)
         {
+            var recipe = _context.Recipes.FirstOrDefault(x => x.Id == recipeId);
             _context.Recipes.Remove(recipe);
             return await _context.SaveChangesAsync();
         }

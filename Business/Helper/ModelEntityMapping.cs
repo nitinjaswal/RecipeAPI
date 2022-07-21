@@ -17,7 +17,7 @@ namespace Business.Helper
                 recipeModel.Servings = recipe.Servings;
                 recipeModel.Instructions = recipe.Instructions;
                 recipeModel.CreatedDateTime = recipe.CreatedDateTime;
-
+                recipeModel.UpdatedDateTime = recipe.UpdatedDateTime;
                 recipeModel.Ingredients = new List<IngredientModel>();
                 foreach (var item in recipe.Ingredients)
                 {
@@ -42,6 +42,7 @@ namespace Business.Helper
             recipe.Instructions = recipeModel.Instructions;
             recipe.IsActive = true;
             recipe.CreatedDateTime = DateTime.Now;
+            recipe.UpdatedDateTime = DateTime.Now;
             recipe.Ingredients = new List<Ingredient>();
             foreach (var item in recipeModel.Ingredients)
             {
@@ -62,6 +63,7 @@ namespace Business.Helper
             recipe.Servings = recipeModel.Servings;
             recipe.Instructions = recipeModel.Instructions;
             recipe.IsActive = true;
+            recipe.CreatedDateTime = recipeModel.CreatedDateTime;
             recipe.UpdatedDateTime = DateTime.Now;
             recipe.Ingredients = new List<Ingredient>();
             foreach (var item in recipeModel.Ingredients)
@@ -73,6 +75,28 @@ namespace Business.Helper
                 });
             }
             return recipe;
+        }
+
+        public static RecipeModel ToGetRecipeModel(this Recipe recipe)
+        {
+            var recipeModel = new RecipeModel();
+            recipeModel.Id = recipe.Id;
+            recipeModel.RecipeName = recipe.RecipeName;
+            recipeModel.IsVeg = recipe.IsVeg;
+            recipeModel.Servings = recipe.Servings;
+            recipeModel.Instructions = recipe.Instructions;
+            recipeModel.IsActive = true;
+            recipeModel.CreatedDateTime=recipe.CreatedDateTime;
+            recipeModel.UpdatedDateTime = recipe.UpdatedDateTime;
+            recipeModel.Ingredients = new List<IngredientModel>();
+            foreach (var item in recipe.Ingredients)
+            {
+                recipeModel.Ingredients.Add(new IngredientModel
+                {
+                    IngredientName = item.IngredientName,
+                });
+            }
+            return recipeModel;
         }
     }
 }

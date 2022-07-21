@@ -13,6 +13,7 @@ namespace Data.Entities
         public int RecipeID { get; set; }
 
         [Required]
+        [MaxLength(500)]
         public string IngredientName { get; set; }
 
         [ForeignKey("RecipeID")]

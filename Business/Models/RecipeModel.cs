@@ -10,11 +10,13 @@ namespace Business.Models
         [Required]
         public Boolean IsVeg { get; set; }
         [Required]
-        public string Servings { get; set; }
+        public int Servings { get; set; }
         [Required]
+        [MaxLength(500)]
         public string Instructions { get; set; }
-        public DateTime? CreatedDateTime { get; set; }
-        public DateTime? UpdatedDateTime { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+        public DateTime UpdatedDateTime { get; set; }
         public ICollection<IngredientModel> Ingredients { get; set; }
     }
 }

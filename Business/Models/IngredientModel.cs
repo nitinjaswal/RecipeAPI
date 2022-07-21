@@ -8,6 +8,7 @@ namespace Business.Models
         [Required]
         public int RecipeID { get; set; }
         [Required]
+        [MaxLength(500)]
         public string IngredientName { get; set; }
     }
 }
