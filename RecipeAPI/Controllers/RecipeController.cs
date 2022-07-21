@@ -1,4 +1,5 @@
-﻿using Data.Repository.Interfaces;
+﻿using Data.Models;
+using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,17 +24,29 @@ namespace RecipeAPI.Controllers
             return Ok(recipes);
         }
 
-        // GET api/<RecipeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<RecipeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] RecipeModel recipeModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(await _recipeRepository.AddRecipe(recipeModel));
+        }
+
+        // PUT api/<RecipeController>
+        [HttpPut]
+        public async Task<ActionResult> PUT([FromBody] RecipeModel recipeModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(await _recipeRepository.AddRecipe(recipeModel));
         }
 
         // DELETE api/<RecipeController>/5

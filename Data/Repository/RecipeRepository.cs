@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.Models;
 using Data.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,9 +18,41 @@ namespace Data.Repository
         {
             _context = context;
         }
-        public void AddRecipe(Recipe recipe)
+        public async Task<OutputModel<bool>> AddRecipe(RecipeModel recipeModel)
         {
-            throw new NotImplementedException();
+            var outputModel = new OutputModel<bool>();
+
+            Recipe recipe = new Recipe();
+            recipe.Id = recipeModel.Id;
+            recipe.RecipeName = recipeModel.RecipeName;
+            recipe.IsVeg = recipeModel.IsVeg;
+            recipe.Servings = recipeModel.Servings;
+            recipe.Instructions = recipeModel.Instructions;
+
+            recipe.Ingredients = new List<Ingredient>();
+            foreach (var item in recipeModel.Ingredients)
+            {
+                recipe.Ingredients.Add(new Ingredient
+                {
+                    IngredientName = item.IngredientName,
+                    RecipeID = item.RecipeID
+                }); ;
+            }
+
+            if (recipe.Id > 0)
+            {
+                _context.Recipes.Update(recipe);
+            }
+            else
+            {
+                _context.Recipes.Add(recipe);
+            }
+
+            _context.SaveChanges();
+            outputModel.Status = true;
+            outputModel.Message = $"Recipe {recipe.RecipeName} added successfully.";
+            return outputModel;
+
         }
 
         public async Task<IEnumerable<Recipe>> GetRecipes()

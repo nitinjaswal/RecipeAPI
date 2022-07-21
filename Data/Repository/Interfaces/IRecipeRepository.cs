@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Data.Repository.Interfaces
     {
         Task<IEnumerable<Recipe>> GetRecipes();
         Task<Recipe> GetRecipeById(int recipeId);
-        void AddRecipe(Recipe recipe);
+        Task<OutputModel<bool>> AddRecipe(RecipeModel recipe);
         Task<int> RemoveRecipe(Recipe recipe);
 
     }
