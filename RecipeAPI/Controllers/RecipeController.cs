@@ -56,7 +56,12 @@ namespace RecipeAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_recipeService.UpdateRecipe(recipeUpdateModel));
+            if (await _recipeService.UpdateRecipe(recipeUpdateModel) > 0)
+            {
+                return Ok("Recipe updated successfully");
+            }
+            return BadRequest("Soemthing went wrong");
+
         }
 
         /// <summary>
@@ -71,7 +76,7 @@ namespace RecipeAPI.Controllers
             if (await _recipeService.RemoveRecipe(recipeId) > 0)
             {
                 return Ok("Recipe deleted successfully");
-            };
+            }
             return BadRequest("Failed to delete Recipe");
         }
     }

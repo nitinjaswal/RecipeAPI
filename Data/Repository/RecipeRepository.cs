@@ -12,10 +12,10 @@ namespace Data.Repository
         {
             _context = context;
         }
-        public async Task UpdateRecipe(Recipe recipe)
+        public async Task<int> UpdateRecipe(Recipe recipe)
         {
             _context.Recipes.Update(recipe);
-            _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
 
         public async Task AddRecipe(Recipe recipe)

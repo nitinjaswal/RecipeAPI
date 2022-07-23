@@ -7,7 +7,7 @@ namespace Business.Services.Interfaces
         Task<IEnumerable<RecipeModel>> GetRecipes();
         Task<RecipeModel> GetRecipeById(int recipeId);
         Task AddRecipe(RecipeAddModel recipe);
-        Task UpdateRecipe(RecipeUpdateModel recipe);
+        Task<int> UpdateRecipe(RecipeUpdateModel recipe);
         Task<int> RemoveRecipe(int recipeId);
     }
 }

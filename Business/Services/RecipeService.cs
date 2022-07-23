@@ -13,9 +13,9 @@ namespace Business.Services
             _recipeRepository = recipeRepository;
         }
 
-        public async Task UpdateRecipe(RecipeUpdateModel recipeUpdateModel)
+        public async Task<int> UpdateRecipe(RecipeUpdateModel recipeUpdateModel)
         {
-            await _recipeRepository.UpdateRecipe(recipeUpdateModel.ToUpdateRecipe());
+            return await _recipeRepository.UpdateRecipe(recipeUpdateModel.ToUpdateRecipe());
         }
 
         public async Task AddRecipe(RecipeAddModel recipeAddModel)
