@@ -3,7 +3,6 @@ using Business.Models;
 using Business.Services.Interfaces;
 using Data.Repository.Interfaces;
 
-
 namespace Business.Services
 {
     public class RecipeService : IRecipeService
@@ -16,12 +15,12 @@ namespace Business.Services
 
         public async Task UpdateRecipe(RecipeUpdateModel recipeUpdateModel)
         {
-            _recipeRepository.UpdateRecipe(recipeUpdateModel.ToUpdateRecipe());
+            await _recipeRepository.UpdateRecipe(recipeUpdateModel.ToUpdateRecipe());
         }
 
         public async Task AddRecipe(RecipeAddModel recipeAddModel)
         {
-            _recipeRepository.AddRecipe(recipeAddModel.ToAddRecipe());
+            await _recipeRepository.AddRecipe(recipeAddModel.ToAddRecipe());
         }
 
         public async Task<IEnumerable<RecipeModel>> GetRecipes()
@@ -32,13 +31,18 @@ namespace Business.Services
 
         public async Task<int> RemoveRecipe(int recipeId)
         {
-            return await _recipeRepository.RemoveRecipe(recipeId);
+            var recipe = await _recipeRepository.GetRecipeById(recipeId);
+            if (recipe != null)
+            {
+                return await _recipeRepository.RemoveRecipe(recipeId);
+            }
+            return 0;
         }
 
         public async Task<RecipeModel> GetRecipeById(int recipeId)
         {
             var recipe = await _recipeRepository.GetRecipeById(recipeId);
-            if(recipe == null)
+            if (recipe == null)
             {
                 return null;
             }
