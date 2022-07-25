@@ -20,7 +20,7 @@ namespace RecipeAPI.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: api/<RecipeController>
-        [HttpGet("", Name = "Recipes")]
+        [HttpGet]
         public async Task<ActionResult> Get()
         {
             return Ok(await _recipeService.GetRecipes());
@@ -79,5 +79,50 @@ namespace RecipeAPI.Controllers
             }
             return BadRequest("Failed to delete Recipe");
         }
+        /// <summary>
+        /// Get Recipe by Id
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
+        [HttpGet("{recipeId:int}")]
+        public async Task<ActionResult> Get(int recipeId)
+        {
+            return Ok(await _recipeService.GetRecipeById(recipeId));
+        }
+
+        /// <summary>
+        /// Get all veg or non-veg recipes
+        /// </summary>
+        /// <param name="IsVeg"></param>
+        /// <returns></returns>
+        [HttpGet("{IsVeg:bool}")]
+        public async Task<ActionResult> Get(bool IsVeg)
+        {
+            return Ok(await _recipeService.GetRecipes(IsVeg));
+        }
+
+        /// <summary>
+        /// Get recipes as per servings 
+        /// </summary>
+        /// <param name="servings"></param>
+        /// <returns></returns>
+        [HttpGet("{servings}")]
+        public async Task<ActionResult> Get(string servings)
+        {
+            return Ok(await _recipeService.GetRecipes(Convert.ToInt32(servings)));
+        }
+
+        /// <summary>
+        /// Get all recipes with are either veg or non-veg including servings
+        /// </summary>
+        /// <param name="IsVeg"></param>
+        /// <param name="servings"></param>
+        /// <returns></returns>
+        [HttpGet("{IsVeg:bool}/Servings/{servings:int}")]
+        public async Task<ActionResult> Get(bool IsVeg, int servings)
+        {
+            return Ok(await _recipeService.GetRecipes(IsVeg, servings));
+        }
+
     }
 }

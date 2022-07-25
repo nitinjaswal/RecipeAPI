@@ -49,5 +49,46 @@ namespace Business.Services
             return recipe.ToGetRecipeModel();
         }
 
+
+        public Task<RecipeModel> GetRecipeById(int recipeId, bool isVeg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<RecipeModel>> GetRecipes(bool isVeg)
+        {
+            var recipes = await _recipeRepository.GetRecipes(isVeg);
+            return recipes.ToRecipeModel();
+        }
+
+        public async Task<IEnumerable<RecipeModel>> GetRecipes(int servings)
+        {
+            var recipes = await _recipeRepository.GetRecipes(servings);
+            return recipes.ToRecipeModel();
+        }
+
+        public async Task<IEnumerable<RecipeModel>> GetRecipes(bool isVeg, int servings)
+        {
+            var recipes = await _recipeRepository.GetRecipes(isVeg,servings);
+            return recipes.ToRecipeModel();
+        }
+
+        public async Task<IEnumerable<RecipeModel>> GetRecipes(bool isVeg, int servings, string inlcude, string exclude)
+        {
+            var recipes = await _recipeRepository.GetRecipes(isVeg, servings, inlcude, exclude);
+            return recipes.ToRecipeModel();
+        }
+
+        public async Task<IEnumerable<RecipeModel>> GetRecipes(int servings, string include)
+        {
+            var recipes = await _recipeRepository.GetRecipes(servings, include);
+            return recipes.ToRecipeModel();
+        }
+
+        public async Task<IEnumerable<RecipeModel>> GetRecipes(string exclude, string instructions)
+        {
+            var recipes = await _recipeRepository.GetRecipes(exclude, instructions);
+            return recipes.ToRecipeModel();
+        }
     }
 }

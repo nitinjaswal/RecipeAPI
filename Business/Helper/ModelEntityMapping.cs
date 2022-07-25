@@ -23,7 +23,9 @@ namespace Business.Helper
                 {
                     recipeModel.Ingredients.Add(new IngredientModel
                     {
-                        IngredientName = item.IngredientName,
+                        Id=item.Id,
+                        RecipeID=item.RecipeID,
+                        IngredientName = item.IngredientName
                     });
                 }
                 listRecipeModel.Add(recipeModel);
