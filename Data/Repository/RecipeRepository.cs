@@ -58,17 +58,18 @@ namespace Data.Repository
 
         public async Task<IEnumerable<Recipe>> GetRecipes(bool isVeg, int servings, string inlcude, string exclude)
         {
-            return await _context.Recipes.Where(x => x.IsActive != false && x.IsVeg == isVeg && x.Servings == servings).Include(ing => ing.Ingredients).ToListAsync();
+            return await _context.Recipes.Where(x => x.IsActive != false && x.IsVeg == isVeg && x.Servings == servings)
+                .Include(ing => ing.Ingredients.Where(name => name.IngredientName == inlcude && name.IngredientName != exclude)).ToListAsync();
         }
 
         public async Task<IEnumerable<Recipe>> GetRecipes(int servings, string inlcude)
         {
-            return await _context.Recipes.Where(x => x.IsActive != false && x.Servings == servings).Include(ing => ing.Ingredients).ToListAsync();
+            return await _context.Recipes.Where(x => x.IsActive != false && x.Servings == servings).Include(ing => ing.Ingredients.Where(name => name.IngredientName == inlcude)).ToListAsync();
         }
 
         public async Task<IEnumerable<Recipe>> GetRecipes(string exclude, string instructions)
         {
-            return await _context.Recipes.Where(x => x.IsActive != false && x.Instructions.Contains(instructions)).Include(ing => ing.Ingredients).ToListAsync();
+            return await _context.Recipes.Where(x => x.IsActive != false && x.Instructions.Contains(instructions)).Include(ing => ing.Ingredients.Where(name => name.IngredientName != exclude)).ToListAsync();
         }
     }
 }
