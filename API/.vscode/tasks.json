@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/RecipeAPI/RecipeAPI.csproj",
+                "${workspaceFolder}/API/RecipeAPI/RecipeAPI.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/RecipeAPI/RecipeAPI.csproj",
+                "${workspaceFolder}/API/RecipeAPI/RecipeAPI.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/RecipeAPI/RecipeAPI.csproj"
+                "${workspaceFolder}/API/RecipeAPI/RecipeAPI.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

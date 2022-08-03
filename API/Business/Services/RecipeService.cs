@@ -39,7 +39,7 @@ namespace Business.Services
             return 0;
         }
 
-        public async Task<RecipeModel> GetRecipeById(int recipe Id)
+        public async Task<RecipeModel> GetRecipeById(int recipeId)
         {
             var recipe = await _recipeRepository.GetRecipeById(recipeId);
             if (recipe == null)
