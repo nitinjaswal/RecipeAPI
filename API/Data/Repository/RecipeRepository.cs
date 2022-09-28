@@ -43,6 +43,8 @@ namespace Data.Repository
 
         public async Task<IEnumerable<Recipe>> GetRecipes(bool isVeg)
         {
+            var recipes = _context.Recipes.AsQueryable();
+            var filterRecipe = recipes.Where(x => x.IsActive != false).ToList(); ;
             return await _context.Recipes.Where(x => x.IsActive != false && x.IsVeg == isVeg).Include(ing => ing.Ingredients).ToListAsync();
         }
 
