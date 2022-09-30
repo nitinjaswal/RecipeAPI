@@ -1,15 +1,14 @@
-﻿namespace RecipeAPI.Errors
+﻿namespace RecipeAPI.Errors;
+using System.Text.Json;
+
+public class ApiException
 {
-    public class ApiException
+    public int StatusCode { get; set; }
+    public string Message { get; set; }
+
+    public override string ToString()
     {
-        public ApiException(int statusCode, string message = null, string details = null)
-        {
-            StatusCode = statusCode;
-            Message = message;
-            Details = details;
-        }
-        public int StatusCode { get; set; }
-        public string Message { get; set; }
-        public string Details { get; set; }
+        return JsonSerializer.Serialize(this);
     }
 }
+
